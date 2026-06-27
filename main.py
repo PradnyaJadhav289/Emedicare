@@ -71,15 +71,15 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
 # ------ UI Routes ------
 @app.get("/", response_class=HTMLResponse)
 def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="index.html")
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
-    return templates.TemplateResponse("dashboard.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="dashboard.html")
 
 @app.get("/appointment/{appt_id}", response_class=HTMLResponse)
 def appointment_room(request: Request, appt_id: int):
-    return templates.TemplateResponse("appointment.html", {"request": request, "appt_id": appt_id})
+    return templates.TemplateResponse(request=request, name="appointment.html", context={"appt_id": appt_id})
 
 # ------ API Routes ------
 @app.post("/api/register", response_model=schemas.UserOut)
@@ -265,16 +265,25 @@ def create_prescription(appt_id: int, p_data: schemas.PrescriptionCreate, curren
         raise HTTPException(status_code=500, detail=f"PDF Generation failed: {e}")
 
     # Save to DB
-    prescription = models.Prescription(
-        appointment_id=appt_id,
-        symptoms=p_data.symptoms,
-        diagnosis=p_data.diagnosis,
-        medicines=p_data.medicines,
-        advice=p_data.advice,
-        follow_up=p_data.follow_up,
-        file_path=pdf_path
-    )
-    db.add(prescription)
+    prescription = db.query(models.Prescription).filter(models.Prescription.appointment_id == appt_id).first()
+    if prescription:
+        prescription.symptoms = p_data.symptoms
+        prescription.diagnosis = p_data.diagnosis
+        prescription.medicines = p_data.medicines
+        prescription.advice = p_data.advice
+        prescription.follow_up = p_data.follow_up
+        prescription.file_path = pdf_path
+    else:
+        prescription = models.Prescription(
+            appointment_id=appt_id,
+            symptoms=p_data.symptoms,
+            diagnosis=p_data.diagnosis,
+            medicines=p_data.medicines,
+            advice=p_data.advice,
+            follow_up=p_data.follow_up,
+            file_path=pdf_path
+        )
+        db.add(prescription)
     db.commit()
     db.refresh(prescription)
     return prescription
@@ -319,6 +328,54 @@ def test_ai():
         return {"status": "success", "response": completion.choices[0].message.content}
     except Exception as e:
         return {"status": "error", "message": f"Groq API Error: {str(e)}"}
+
+# ------ Translation API ------
+@app.post("/api/translate", response_model=schemas.TranslateResponse)
+def translate_text(req: schemas.TranslateRequest):
+    """Translate text between languages. Uses deep-translator (free, no API key needed)."""
+    if not req.text or not req.text.strip():
+        return schemas.TranslateResponse(
+            original_text=req.text or "",
+            translated_text=req.text or "",
+            detected_lang=req.source_lang,
+            target_lang=req.target_lang,
+            success=False
+        )
+    
+    try:
+        from deep_translator import GoogleTranslator
+        
+        source = req.source_lang if req.source_lang != "auto" else "auto"
+        translator = GoogleTranslator(source=source, target=req.target_lang)
+        translated = translator.translate(req.text.strip())
+        
+        # deep-translator doesn't return detected language directly when source='auto'
+        # We'll report 'auto' as detected in that case
+        detected = req.source_lang
+        if req.source_lang == "auto":
+            try:
+                from deep_translator import single_detection
+                detected = single_detection(req.text.strip(), api_key=None)
+            except Exception:
+                detected = "auto"
+        
+        return schemas.TranslateResponse(
+            original_text=req.text,
+            translated_text=translated or req.text,
+            detected_lang=detected,
+            target_lang=req.target_lang,
+            success=True
+        )
+    except Exception as e:
+        print(f"Translation Error: {e}")
+        # Graceful fallback: return original text, never crash
+        return schemas.TranslateResponse(
+            original_text=req.text,
+            translated_text=req.text,
+            detected_lang=req.source_lang,
+            target_lang=req.target_lang,
+            success=False
+        )
 
 @app.post("/api/ai/generate-prescription", response_model=schemas.AIPredictResponse)
 def generate_ai_prescription(request: schemas.AIPredictRequest, current_user: models.User = Depends(get_current_user)):

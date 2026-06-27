@@ -73,3 +73,15 @@ class AIPredictResponse(BaseModel):
     diagnosis: str
     medicines: str
     advice: str
+
+class TranslateRequest(BaseModel):
+    text: str
+    source_lang: str = "auto"
+    target_lang: str = "en"
+
+class TranslateResponse(BaseModel):
+    original_text: str
+    translated_text: str
+    detected_lang: str
+    target_lang: str
+    success: bool

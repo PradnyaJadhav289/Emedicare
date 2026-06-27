@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard - Medicare</title>
+  <title>Dashboard - E-Medicare</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
   <!-- Global Loader -->
   <div id="global-loader" class="hidden">
@@ -15,11 +17,11 @@
     <!-- Fixed Left Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-brand">
-        🩺 Medicare
+        🩺E-Medicare
       </div>
       <nav class="sidebar-nav">
         <a href="#dash" class="nav-item active" data-target="sec-dash">
-          <span class="icon">🏠</span> 
+          <span class="icon">🏠</span>
           <span data-lang-key="dashboard">Dashboard</span>
         </a>
         <a href="#appointments" class="nav-item" data-target="sec-appointments">
@@ -58,14 +60,18 @@
 
       <!-- Dashboard Overview Section -->
       <section id="sec-dash" class="page-section">
-        
+
         <!-- Doctor Info Header Card (Visible to Doctor) -->
-        <div id="doctorProfileCard" class="card mb-4 hidden" style="background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%); color: white;">
+        <div id="doctorProfileCard" class="card mb-4 hidden"
+          style="background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%); color: white;">
           <div class="flex-between">
             <div>
               <h3 style="color: white;"><span id="drCardName"></span></h3>
-              <p style="color: #e2e8f0; font-size: 1.1rem;"><span id="drCardSpec">General Physician | 10+ Years Exp.</span></p>
-              <p style="color: #e2e8f0; margin-top: 8px;">Status: <span style="background: var(--secondary); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">Available</span></p>
+              <p style="color: #e2e8f0; font-size: 1.1rem;"><span id="drCardSpec">General Physician | 10+ Years
+                  Exp.</span></p>
+              <p style="color: #e2e8f0; margin-top: 8px;">Status: <span
+                  style="background: var(--secondary); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">Available</span>
+              </p>
             </div>
             <div style="font-size: 4rem;">👨‍⚕️</div>
           </div>
@@ -79,7 +85,8 @@
             <div id="upcomingApptsList">
               <!-- Injected by JS -->
             </div>
-            <button class="secondary mt-4" style="width: 100%;" onclick="document.querySelector('[data-target=\'sec-appointments\']').click()">View All</button>
+            <button class="secondary mt-4" style="width: 100%;"
+              onclick="document.querySelector('[data-target=\'sec-appointments\']').click()">View All</button>
           </div>
 
           <!-- Quick Actions -->
@@ -87,9 +94,12 @@
             <h3>⚡ Quick Actions</h3>
             <p class="text-muted mb-4">Fastest ways to manage operations</p>
             <div class="flex-col">
-              <button onclick="document.querySelector('[data-target=\'sec-doctors\']').click()" class="patient-only hidden">Book Appointment</button>
-              <button onclick="document.querySelector('[data-target=\'sec-appointments\']').click()" class="success">Start Consultation</button>
-              <button onclick="document.querySelector('[data-target=\'sec-prescriptions\']').click()" class="secondary">View Prescriptions</button>
+              <button onclick="document.querySelector('[data-target=\'sec-doctors\']').click()"
+                class="patient-only hidden">Book Appointment</button>
+              <button onclick="document.querySelector('[data-target=\'sec-appointments\']').click()"
+                class="success">Start Consultation</button>
+              <button onclick="document.querySelector('[data-target=\'sec-prescriptions\']').click()"
+                class="secondary">View Prescriptions</button>
             </div>
           </div>
 
@@ -97,8 +107,10 @@
           <div class="card hover-effect doctor-only hidden" style="border-left: 4px solid var(--accent);">
             <h3>🤖 AI Assistant Ready</h3>
             <p class="text-muted mb-4">Medicare's AI is pre-loaded and ready to assist your clinical decisions.</p>
-            <p>During active consultations, our AI can analyze symptoms to instantly suggest probable diagnoses and medicines, improving accuracy and speed.</p>
-            <button onclick="document.querySelector('[data-target=\'sec-ai\']').click()" class="mt-4" style="background: var(--accent); color: white;">Learn More</button>
+            <p>During active consultations, our AI can analyze symptoms to instantly suggest probable diagnoses and
+              medicines, improving accuracy and speed.</p>
+            <button onclick="document.querySelector('[data-target=\'sec-ai\']').click()" class="mt-4"
+              style="background: var(--accent); color: white;">Learn More</button>
           </div>
         </div>
       </section>
@@ -107,7 +119,7 @@
       <section id="sec-appointments" class="page-section hidden">
         <h2>📅 All Appointments</h2>
         <p class="text-muted mb-4">Manage and review your consultation history.</p>
-        
+
         <div id="appointmentsList" class="grid">
           <!-- Appts inject here -->
         </div>
@@ -117,13 +129,17 @@
       <section id="sec-doctors" class="page-section hidden">
         <h2>👨‍⚕️ Available Doctors</h2>
         <p class="text-muted mb-4">Browse our specialized doctors and book instantly.</p>
-        
-        <div style="background: white; padding: 16px; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+
+        <div
+          style="background: white; padding: 16px; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
           <h3 style="margin-bottom: 12px; color: var(--primary);">Smart Doctor Search</h3>
           <div class="flex-col">
-            <input type="text" id="smartSymptomSearch" placeholder="Describe your symptoms (e.g. skin rash, chest pain)..." style="width: 100%; margin-bottom: 12px; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px;">
+            <input type="text" id="smartSymptomSearch"
+              placeholder="Describe your symptoms (e.g. skin rash, chest pain)..."
+              style="width: 100%; margin-bottom: 12px; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px;">
             <div class="flex" style="gap: 12px; align-items: center;">
-              <select id="specFilter" style="flex: 1; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px;">
+              <select id="specFilter"
+                style="flex: 1; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px;">
                 <option value="">All Specializations</option>
                 <option value="General Physician">General Physician</option>
                 <option value="Cardiologist">Cardiologist</option>
@@ -139,7 +155,8 @@
               <button onclick="applyDoctorFilters()" class="secondary">Search</button>
             </div>
           </div>
-          <p id="recommendationMsg" class="success hidden mt-4" style="font-weight: bold;">✅ Showing recommended doctors based on your symptoms.</p>
+          <p id="recommendationMsg" class="success hidden mt-4" style="font-weight: bold;">✅ Showing recommended doctors
+            based on your symptoms.</p>
         </div>
 
         <!-- Booking Modal logic handled inline below -->
@@ -153,7 +170,9 @@
         <h2>📜 Digital Prescriptions</h2>
         <p class="text-muted mb-4">All your generated and received prescriptions are safely logged.</p>
         <div class="card">
-          <p class="text-center text-muted">To view a specific prescription, navigate to an <a href="#" onclick="document.querySelector('[data-target=\'sec-appointments\']').click()">Completed Appointment</a> and click 'Join Room' to download the PDF.</p>
+          <p class="text-center text-muted">To view a specific prescription, navigate to an <a href="#"
+              onclick="document.querySelector('[data-target=\'sec-appointments\']').click()">Completed Appointment</a>
+            and click 'Join Room' to download the PDF.</p>
         </div>
       </section>
 
@@ -171,13 +190,14 @@
         </div>
       </section>
 
-       <!-- Records Section -->
-       <section id="sec-records" class="page-section hidden">
+      <!-- Records Section -->
+      <section id="sec-records" class="page-section hidden">
         <h2>📁 Electronic Medical Records</h2>
         <div class="card text-center hover-effect">
           <div style="font-size: 3rem; margin-bottom: 16px;">📂</div>
           <h3>System Sync in Progress</h3>
-          <p class="text-muted">Legacy medical records are currently being synced with the central Medicare database. Check back soon.</p>
+          <p class="text-muted">Legacy medical records are currently being synced with the central Medicare database.
+            Check back soon.</p>
         </div>
       </section>
 
@@ -189,14 +209,17 @@
         <span class="modal-close" onclick="closeBookingModal()">&times;</span>
         <h2>Book Appointment</h2>
         <p class="text-muted mb-4">Scheduling consultation with <strong id="bookDrName"></strong></p>
-        
+
         <div class="flex-col">
           <label style="font-weight: 500;">Select Date & Time</label>
           <input type="datetime-local" id="apptDateInput">
-          
+
           <label style="font-weight: 500; margin-top: 12px;">Symptoms / Reason for Visit</label>
-          <textarea id="apptSymptomsInput" rows="2" placeholder="e.g. fever, chest pain..."></textarea>
-          
+          <textarea id="apptSymptomsInput" rows="2" placeholder="e.g. fever, chest pain... (type in any language)"></textarea>
+
+          <!-- Translation Widget -->
+          <div id="bookingTranslateWidget"></div>
+
           <button id="confirmBookBtn" class="success mt-4">Confirm Booking</button>
         </div>
       </div>
@@ -230,7 +253,7 @@
         // Update active class
         navItems.forEach(n => n.classList.remove('active'));
         item.classList.add('active');
-        
+
         // Toggle Sections
         const targetId = item.getAttribute('data-target');
         sections.forEach(s => s.classList.add('hidden'));
@@ -244,6 +267,8 @@
       if (user.role === 'patient') {
         await loadDoctors();
       }
+      // Initialize translation widget for booking modal
+      buildTranslateWidget('bookingTranslateWidget', 'apptSymptomsInput', 'apptSymptomsInput');
     }
 
     // Book Appointment Flow
@@ -261,7 +286,7 @@
       const dt = document.getElementById('apptDateInput').value;
       const symptoms = document.getElementById('apptSymptomsInput').value;
       if (!dt) { showToast("Please select a date and time", "error"); return; }
-      
+
       try {
         await apiCall('/api/appointments', 'POST', { doctor_id: selectedDrIdForBook, date_time: dt, symptoms: symptoms });
         showToast("Appointment successfully booked!");
@@ -272,7 +297,7 @@
       }
     });
 
-    async function loadDoctors(symptoms='', specFilter='') {
+    async function loadDoctors(symptoms = '', specFilter = '') {
       try {
         let endpoint = '/api/doctors';
         if (symptoms) {
@@ -280,21 +305,21 @@
         }
         const docs = await apiCall(endpoint);
         const grid = document.getElementById('doctorsGrid');
-        
+
         if (symptoms) {
-            document.getElementById('recommendationMsg').classList.remove('hidden');
+          document.getElementById('recommendationMsg').classList.remove('hidden');
         } else {
-            document.getElementById('recommendationMsg').classList.add('hidden');
+          document.getElementById('recommendationMsg').classList.add('hidden');
         }
 
         const filteredDocs = docs.filter(d => {
-            if (specFilter && d.specialization !== specFilter) return false;
-            return true;
+          if (specFilter && d.specialization !== specFilter) return false;
+          return true;
         });
 
         if (filteredDocs.length === 0) {
-            grid.innerHTML = '<p class="text-muted">No doctors found matching criteria.</p>';
-            return;
+          grid.innerHTML = '<p class="text-muted">No doctors found matching criteria.</p>';
+          return;
         }
 
         grid.innerHTML = filteredDocs.map((d, index) => {
@@ -303,7 +328,7 @@
             badge = `<span style="background: var(--success); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; float: right;">Recommended Match</span>`;
           }
           return `
-          <div class="card hover-effect" style="${symptoms && index===0 ? 'border-left: 4px solid var(--success);' : ''}">
+          <div class="card hover-effect" style="${symptoms && index === 0 ? 'border-left: 4px solid var(--success);' : ''}">
             ${badge}
             <h3 style="color: var(--primary)">Dr. ${d.name.replace('Dr. ', '')}</h3>
             <p class="text-muted"><span class="icon">⚕️</span> ${d.specialization || 'General Physician'}</p>
@@ -325,12 +350,12 @@
     }
 
     async function updateStatus(id, newStatus) {
-      if(user.role !== 'doctor') return;
+      if (user.role !== 'doctor') return;
       try {
         await apiCall(`/api/appointments/${id}/status`, 'PUT', { status: newStatus });
         showToast("Appointment status updated");
         loadAppointments();
-      } catch(e) {
+      } catch (e) {
         showToast(e.message, "error");
       }
     }
@@ -340,7 +365,7 @@
         const appts = await apiCall('/api/appointments');
         const listFull = document.getElementById('appointmentsList');
         const listDash = document.getElementById('upcomingApptsList');
-        
+
         if (appts.length === 0) {
           const emptyMsg = `<p class="text-muted text-center">No appointments found.</p>`;
           listFull.innerHTML = emptyMsg;
@@ -349,7 +374,7 @@
         }
 
         // Sort: newest first or upcoming logic. For MVP we sort by ID/creation descending.
-        appts.sort((a,b) => b.id - a.id);
+        appts.sort((a, b) => b.id - a.id);
 
         let dashHTML = "";
         let count = 0;
@@ -359,20 +384,20 @@
           const otherName = isDoc ? a.patient.name : Object.hasOwnProperty.call(a, 'doctor') ? a.doctor.name : 'Doctor';
           const otherRole = isDoc ? "Patient" : "Doctor";
           const dDate = new Date(a.date_time).toLocaleString();
-          
+
           let statusHtml = `<span class="status-badge status-${a.status.toLowerCase()}">${a.status}</span>`;
           if (isDoc) {
             statusHtml = `
               <select onchange="updateStatus(${a.id}, this.value)" style="width: auto; margin:0; padding:4px; font-size: 0.8rem; border-radius: 4px;">
-                <option value="pending" ${a.status==='pending'?'selected':''}>Pending</option>
-                <option value="approved" ${a.status==='approved'?'selected':''}>Approved</option>
-                <option value="completed" ${a.status==='completed'?'selected':''}>Completed</option>
-                <option value="cancelled" ${a.status==='cancelled'?'selected':''}>Cancelled</option>
+                <option value="pending" ${a.status === 'pending' ? 'selected' : ''}>Pending</option>
+                <option value="approved" ${a.status === 'approved' ? 'selected' : ''}>Approved</option>
+                <option value="completed" ${a.status === 'completed' ? 'selected' : ''}>Completed</option>
+                <option value="cancelled" ${a.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
               </select>
             `;
           }
 
-          let joinBtn = (a.status === 'approved' || a.status === 'completed') 
+          let joinBtn = (a.status === 'approved' || a.status === 'completed')
             ? `<button class="success mt-4" style="width:100%" onclick="window.location.href='/appointment/${a.id}'" data-lang-key="join_call">Join Consultation Room</button>`
             : '';
 
@@ -407,7 +432,7 @@
 
         listFull.innerHTML = htmlArr.join('');
         listDash.innerHTML = dashHTML || `<p class="text-muted text-center">No upcoming schedules.</p>`;
-        
+
         applyTranslations();
       } catch (e) {
         console.error(e);
@@ -417,4 +442,5 @@
     loadAllData();
   </script>
 </body>
+
 </html>

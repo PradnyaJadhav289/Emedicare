@@ -37,11 +37,55 @@
       
       <!-- Doctor Mode -->
       <div id="doctorTools" class="hidden">
-        <div style="background: #eff6ff; padding: 16px; border-radius: 8px; border-left: 4px solid var(--accent); margin-bottom: 24px;">
-          <h4 style="color: var(--accent); margin-bottom: 8px;">🤖 AI Diagnostician</h4>
-          <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 12px;">Type patient symptoms to instantly get suggested diagnoses and medicinal plans.</p>
-          <textarea id="symptomsInput" rows="2" placeholder="e.g., fever, cough, stomach ache..."></textarea>
-          <button onclick="getAIAdvice()" class="secondary" style="width: 100%;">Get AI Suggestion</button>
+        <div style="background: #eff6ff; padding: 20px; border-radius: 12px; border: 1px solid #dbeafe; margin-bottom: 24px;">
+          <h4 style="color: var(--primary); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.2rem;">🎙️</span> AI-Assisted Voice Workbench
+          </h4>
+          <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 16px;">Record patient symptoms in any language for instant English translation and AI diagnosis.</p>
+          
+          <!-- Recording State -->
+          <div id="recordingIndicator" class="recording-indicator hidden">
+            <span class="recording-dot"></span>
+            <span>Recording Patient Voice...</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="voice-btn-group" style="align-items: flex-end;">
+            <div style="flex: 1;">
+              <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">Patient Language</label>
+              <select id="recordingLang" style="margin-bottom: 0; padding: 8px; font-size: 0.85rem;">
+                <option value="en-US">English</option>
+                <option value="hi-IN">Hindi</option>
+                <option value="mr-IN">Marathi</option>
+                <option value="es-ES">Spanish</option>
+                <option value="fr-FR">French</option>
+                <option value="ar-SA">Arabic</option>
+              </select>
+            </div>
+            <button id="startRecordBtn" class="btn-record-start" style="height: 40px;" onclick="startVoiceWorkbench()">
+              <span>▶️</span> Start
+            </button>
+            <button id="stopRecordBtn" class="btn-record-stop hidden" style="height: 40px;" onclick="stopVoiceWorkbench()">
+              <span>⏹️</span> Stop
+            </button>
+          </div>
+
+          <!-- Symptom Boxes -->
+          <div class="symptoms-box-container">
+            <div class="symptoms-box original">
+              <label>Original Symptoms (Patient Language)</label>
+              <textarea id="symptomsInput" placeholder="Spoken symptoms will appear here..."></textarea>
+            </div>
+            
+            <div class="symptoms-box translated">
+              <label>Translated Symptoms (English)</label>
+              <textarea id="translatedSymptoms" placeholder="English translation will appear here..."></textarea>
+            </div>
+          </div>
+          
+          <button onclick="getAIAdvice()" class="secondary" style="width: 100%; font-weight: 700; background: var(--primary); color: white;">
+            🤖 Generate AI Prescription Suggestions
+          </button>
         </div>
 
         <h4>📜 Final Prescription</h4>
@@ -131,9 +175,77 @@
         window.location.href='/dashboard'; 
     }
 
+    let recognition = null;
+
+    function startVoiceWorkbench() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        showToast('Speech recognition not supported in this browser.', 'error');
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = document.getElementById('recordingLang').value || 'en-US';
+
+      document.getElementById('startRecordBtn').classList.add('hidden');
+      document.getElementById('stopRecordBtn').classList.remove('hidden');
+      document.getElementById('recordingIndicator').classList.remove('hidden');
+
+      recognition.onresult = (event) => {
+        let transcript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        document.getElementById('symptomsInput').value = transcript;
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        if (event.error === 'network') {
+          showToast('Network error: Browser cannot reach speech services. Check internet or use Chrome.', 'error');
+        } else if (event.error === 'not-allowed') {
+          showToast('Microphone permission denied.', 'error');
+        } else {
+          showToast('Speech Error: ' + event.error, 'error');
+        }
+        stopVoiceWorkbench();
+      };
+
+      recognition.start();
+      showToast('Recording started...');
+    }
+
+    async function stopVoiceWorkbench() {
+      if (recognition) {
+        recognition.stop();
+        recognition = null;
+      }
+
+      document.getElementById('startRecordBtn').classList.remove('hidden');
+      document.getElementById('stopRecordBtn').classList.add('hidden');
+      document.getElementById('recordingIndicator').classList.add('hidden');
+
+      const originalText = document.getElementById('symptomsInput').value;
+      if (originalText) {
+        showToast('Translating symptoms...');
+        const result = await translateText(originalText, 'auto', 'en');
+        if (result && result.success) {
+          document.getElementById('translatedSymptoms').value = result.translated_text;
+          showToast('Translation complete!');
+        }
+      }
+    }
+
     async function getAIAdvice() {
-      const symp = document.getElementById('symptomsInput').value;
-      if (!symp) { showToast("Please enter symptoms first.", "error"); return; }
+      const originalSymp = document.getElementById('symptomsInput').value;
+      const translatedSymp = document.getElementById('translatedSymptoms').value;
+      
+      // Use translated symptoms if available, fallback to original
+      const symp = translatedSymp || originalSymp;
+
+      if (!symp) { showToast("Please enter or record symptoms first.", "error"); return; }
 
       showLoader();
       try {

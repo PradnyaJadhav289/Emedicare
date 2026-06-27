@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Medicare - Digital Healthcare Platform</title>
+  <title>E-Medicare - Digital Healthcare Platform</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
   <!-- Global Loader -->
   <div id="global-loader" class="hidden">
@@ -12,7 +14,7 @@
   </div>
 
   <nav class="landing-nav">
-    <div class="brand">🩺 Medicare</div>
+    <div class="brand">🩺 E-Medicare</div>
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#about">About</a>
@@ -25,8 +27,10 @@
     <!-- Hero Section -->
     <section class="hero">
       <h1>Your Health in Safe Hands</h1>
-      <p>Experience the future of healthcare. Consult top doctors, get AI-powered symptom analysis, and manage your medical records all in one place—instantly from your home.</p>
-      <button onclick="showAuthModal()" class="btn-primary" style="font-size: 1.1rem; padding: 16px 32px;">Book an Appointment Now</button>
+      <p>Experience the future of healthcare. Consult top doctors, get AI-powered symptom analysis, and manage your
+        medical records all in one place—instantly from your home.</p>
+      <button onclick="showAuthModal()" class="btn-primary" style="font-size: 1.1rem; padding: 16px 32px;">Book an
+        Appointment Now</button>
     </section>
 
     <!-- Features Section -->
@@ -35,19 +39,23 @@
       <div class="grid">
         <div class="card hover-effect">
           <h3 style="color: var(--primary);">📅 Seamless Booking</h3>
-          <p class="text-muted">Easily schedule appointments with top specialized doctors at times that work for you. Say goodbye to long clinic wait times.</p>
+          <p class="text-muted">Easily schedule appointments with top specialized doctors at times that work for you.
+            Say goodbye to long clinic wait times.</p>
         </div>
         <div class="card hover-effect">
           <h3 style="color: var(--secondary);">🎥 Video Consultations</h3>
-          <p class="text-muted">High-quality, secure 1-on-1 virtual sessions with your doctor. Built on robust technologies ensuring privacy and reliability.</p>
+          <p class="text-muted">High-quality, secure 1-on-1 virtual sessions with your doctor. Built on robust
+            technologies ensuring privacy and reliability.</p>
         </div>
         <div class="card hover-effect">
           <h3 style="color: var(--accent);">🤖 AI Diagnostician</h3>
-          <p class="text-muted">Doctors are assisted by our cutting-edge AI engine that cross-references symptoms to suggest diagnoses and treatments instantly.</p>
+          <p class="text-muted">Doctors are assisted by our cutting-edge AI engine that cross-references symptoms to
+            suggest diagnoses and treatments instantly.</p>
         </div>
         <div class="card hover-effect">
           <h3 style="color: var(--danger);">📜 Digital Prescriptions</h3>
-          <p class="text-muted">Get structured digital prescriptions that you can download as PDFs securely. Never lose a prescription paper again.</p>
+          <p class="text-muted">Get structured digital prescriptions that you can download as PDFs securely. Never lose
+            a prescription paper again.</p>
         </div>
       </div>
     </section>
@@ -55,9 +63,12 @@
     <!-- About Section -->
     <section id="about" style="background: white; padding: 64px 24px;">
       <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-        <h2 style="color: var(--primary); font-size: 2rem;">About Medicare</h2>
+        <h2 style="color: var(--primary); font-size: 2rem;">About E-Medicare</h2>
         <p class="text-muted" style="font-size: 1.1rem;">
-          Medicare was built by a passionate team of technical visionaries and medical experts. Our mission is to bridge the gap between patients and providers through frictionless technology. Whether you are seeking quick consultations or long-term care management, Medicare is your professional health companion.
+          E-Medicare was built by a passionate team of technical visionaries and medical experts. Our mission is to
+          bridge
+          the gap between patients and providers through frictionless technology. Whether you are seeking quick
+          consultations or long-term care management, E-Medicare is your professional health companion.
         </p>
       </div>
     </section>
@@ -65,27 +76,28 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <h3 style="color: white; margin-bottom: 16px;">🩺 Medicare</h3>
-    <p style="opacity: 0.7; margin-bottom: 24px;">Transforming healthcare through simplicity, speed, and intelligence.</p>
+    <h3 style="color: white; margin-bottom: 16px;">🩺 E-Medicare</h3>
+    <p style="opacity: 0.7; margin-bottom: 24px;">Transforming healthcare through simplicity, speed, and intelligence.
+    </p>
     <div style="display: flex; justify-content: center; gap: 32px; opacity: 0.8;">
       <a href="#about" style="color: white; text-decoration: none;">About</a>
       <a href="#contact" style="color: white; text-decoration: none;">Contact Support</a>
       <a href="#" style="color: white; text-decoration: none;">Credits & Legal</a>
     </div>
-    <p style="margin-top: 48px; opacity: 0.5; font-size: 0.9rem;">&copy; 2026 Medicare Inc. All rights reserved.</p>
+    <p style="margin-top: 48px; opacity: 0.5; font-size: 0.9rem;">&copy; 2026 E-Medicare Inc. All rights reserved.</p>
   </footer>
 
   <!-- Auth Modal -->
   <div id="authModal" class="modal-overlay hidden">
     <div class="modal">
       <span class="modal-close" onclick="hideAuthModal()">&times;</span>
-      <h2 id="formTitle">Login to Medicare</h2>
-      
+      <h2 id="formTitle">Login to E-Medicare</h2>
+
       <form id="authForm" onsubmit="handleAuth(event)">
         <input type="text" id="name" placeholder="Full Name" class="hidden">
         <input type="email" id="email" placeholder="Email Address" required>
         <input type="password" id="password" placeholder="Password" required>
-        
+
         <select id="role" class="hidden">
           <option value="patient">I am a Patient</option>
           <option value="doctor">I am a Doctor</option>
@@ -93,9 +105,10 @@
 
         <button type="submit" id="submitBtn" style="width: 100%; margin-top: 16px;">Login</button>
       </form>
-      
+
       <p style="margin-top: 24px; text-align: center;">
-        <a href="#" onclick="toggleMode(); return false;" id="toggleModeText" style="color: var(--primary); font-weight: 500;">Need an account? Register</a>
+        <a href="#" onclick="toggleMode(); return false;" id="toggleModeText"
+          style="color: var(--primary); font-weight: 500;">Need an account? Register</a>
       </p>
 
       <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 8px; font-size: 0.9rem;">
@@ -113,20 +126,20 @@
     function showAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
     }
-    
+
     function hideAuthModal() {
       document.getElementById('authModal').classList.add('hidden');
     }
 
     // Redirect if logged in
-    if(getToken()) window.location.href = '/dashboard';
+    if (getToken()) window.location.href = '/dashboard';
 
     function toggleMode() {
       isLogin = !isLogin;
       document.getElementById('name').classList.toggle('hidden', isLogin);
       document.getElementById('role').classList.toggle('hidden', isLogin);
       document.getElementById('name').required = !isLogin;
-      
+
       document.getElementById('formTitle').innerText = isLogin ? 'Login to Medicare' : 'Create an Account';
       document.getElementById('submitBtn').innerText = isLogin ? 'Login' : 'Register Now';
       document.getElementById('toggleModeText').innerText = isLogin ? 'Have an account? Login' : 'Need an account? Register';
@@ -156,9 +169,10 @@
     }
 
     // Close modal on click outside
-    document.getElementById('authModal').addEventListener('click', function(e) {
-      if(e.target === this) hideAuthModal();
+    document.getElementById('authModal').addEventListener('click', function (e) {
+      if (e.target === this) hideAuthModal();
     });
   </script>
 </body>
+
 </html>
