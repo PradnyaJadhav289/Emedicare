@@ -24,8 +24,10 @@ import schemas
 
 load_dotenv()
 
-SECRET_KEY = "supersecretkey_for_healthcare_mvp_only"
-ALGORITHM = "HS256"
+SECRET_KEY = os.environ.get("SECRET_KEY")
+ALGORITHM = os.environ.get("ALGORITHM", "HS256")
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY is missing. Add SECRET_KEY to your .env file.")
 
 app = FastAPI(title="Healthcare MVP")
 
